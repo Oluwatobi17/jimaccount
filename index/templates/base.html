@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{{title}}</title>
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<nav class="navbar">
+		<a href="{% url 'account' %}"><span class="logo">Jim Account</span></a>
+		{% if request.user.is_authenticated %}
+			<span id="full">
+				<a href="{% url 'logout' %}" class="loginA">Logout</a>
+				<a href="{% url 'profile' %}" class="loginA">Profile</a>
+				<a href="{% url 'investments' %}" class="loginA">Investments</a>
+				<a href="{% url 'account' %}" class="loginA">Accounts</a>
+			</span>
+
+			<span class="dropcontent" id="half">
+				<img src="{% static 'img/but.png' %}" class="dropimg">
+
+				<div class="hide" id="data">
+					<a href="{% url 'logout' %}" class="navtag">Logout</a>
+					<a href="{% url 'profile' %}" class="navtag">Profile</a>
+					<a href="{% url 'investments' %}" class="navtag">Investments</a>
+					<a href="{% url 'account' %}" class="navtag">Accounts</a>
+				</div>
+			</span>
+		{% endif %}
+	</nav>
+	
+</head>
+<body>
+	<ul id="messagelist">
+		<p id="reactmessage" class="error hide"></p>
+		{% if messages %}
+			{% for message in messages %}
+				<li id="message" {% if message.tags %} class="{{message.tags}}" {% endif %}>
+					{{message}}
+				</li>
+			{% endfor %}
+		{% endif %}
+	</ul>
+	<div class="container">
+		{% block content %}
+
+	    {% endblock %}
+    </div>
+</body>
+<script type="text/javascript" src="{% static 'jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'script.js' %}"></script>
+
+<!-- <script type="text/javascript" src="{% static 'index/js/jsapi' %}"></script> -->
+ </html>

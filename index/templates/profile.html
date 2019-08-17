@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+	<div class="reg-container">
+		<img src="{% static 'img/user.png' %}" class="legend">
+		<h1 class="white center">Edit profile</h2>
+
+		<div>
+			<form action="" method="post">
+				{% csrf_token %}
+				<div class="rol-1">
+					<div class="sm-rol-2">
+						<div class="col-6">
+							<label>First name</label>
+							<input type="text" name="first_name" value="{{user.first_name}}" placeholder="Enter First name" required>
+						</div>
+					</div>
+					<div class="sm-rol-2">
+						<div class="col-6">
+							<label>Last name</label>
+							<input type="text" name="last_name" value="{{user.last_name}}" placeholder="Enter Last name" required>
+						</div>
+					</div>
+					<div class="sm-rol-2">
+						<div class="col-6">
+							<label>Email</label>
+							<input type="email" name="email" value="{{user.email}}" placeholder="Enter Email" required>
+						</div>
+					</div>
+					<div class="sm-rol-2">
+						<div class="col-6">
+							<label>Current Password</label>
+							<input type="password" name="currentpassword" placeholder="Current Password" required>
+						</div>
+					</div>
+					<h5 class="white center">Change password</h5>
+					<div class="sm-rol-2">
+						<div class="col-6">
+							<label>New Password</label>
+							<input type="password" name="newpassword" placeholder="Choose Password">
+						</div>
+					</div>
+					<div class="sm-rol-2">
+						<div class="col-6">
+							<label>Confirm Password</label>
+							<input type="password" name="newpassword2" placeholder="Confirm Password">
+						</div>
+					</div>
+				</div>
+				<input type="submit" value="Edit Profile" class="regsubmit">
+			</form>
+		</div>
+	</div>
+{% endblock %}

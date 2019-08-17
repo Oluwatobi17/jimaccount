@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+
+{% load static %}
+
+{% block content %}
+	{% if user.role == 'write' %}
+		<form class="investmentForm" method="post" action="">
+			{% csrf_token %}
+			<h2>New investment</h2>
+			<label>Investor:</label>
+			<select name="investor">
+				{% for investor in investors %}
+					<option value="{{investor.pk}}">{{investor.username}}</option>
+				{% endfor %}
+			</select>
+			<label>Amount:</label>
+			<input type="number" name="amount">
+
+			<label>Rate:</label>
+			<input type="number" name="interest_rate">
+
+			<label>Investment Date:</label>
+			<input type="date" name="investmentDate">
+
+			<input type="submit" value="Add">
+		</form>
+	{% endif %}
+	<div class="fromleft">
+		<h2 class="center">Investors({{investors | length}})</h2>
+		{% if investors %}
+			{% for investor in investors %}
+				<div class="infodrop">
+					<div>
+						<!-- Info that always show -->
+						<div class="sm-rol-2">
+							<div class="col-6">
+								<span class="dropfront">{{investor.username}}</span>
+							</div>
+						</div>
+
+						<div class="sm-rol-2">
+							<div class="col-6">
+								<span class="dropfront">{{investor.first_name}} {{investor.last_name}}</span>
+							</div>
+							<span class="right more" data-drop="{{investor.pk}}">More</span>
+						</div>
+						<!-- Info that show on click -->
+						<div class="hide" id="{{investor.pk}}">
+							<br>
+							{% if investor.investment_set.count %}
+								{% for investment in investor.investment_set.all %}
+									<div class="sm-rol-2">
+										<div class="col-6">
+											<span class="dropfront2">Amount: #{{investment.amount}} X {{investment.interest_rate}}</span>
+										</div>
+									</div>
+									
+									<div class="sm-rol-2">
+										<div class="col-6">
+											<span class="dropfront2">Date: {{investment.investmentDate|date:"d, M, Y"}}</span>
+										</div>
+									</div>
+
+									<br>
+									<br>
+								{% endfor %}
+							{% else %}
+								<h5>{{investor.username}} have no investment yet</h5>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<h3>There is no investment yet</h3>
+		{% endif %}
+	</div>
+{% endblock %}

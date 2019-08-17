@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+	<!-- Login form -->
+	<div class="login-container innernavactive" data-access="#login">
+		<img src="{% static 'img/user.png' %}" class="legend">
+		<form action="" method="post">
+			{% csrf_token %}
+			<h1 class="white">Member Login</h1>
+			<div class="login-field">
+				<label class="alone">Username </label>
+				<input type="text" name="username" placeholder="Enter Username" class="login-input" required>
+			</div>
+
+			<div class="login-field">
+				<label class="alone">Password </label>
+				<input type="password" name="password" placeholder="Enter Password" class="login-input" required>
+			</div>
+
+			<div class="login-field">
+				<input type="submit" value="Login" class="login-submit">
+				<p class="forget">Forget password? <a href="#" class="forgetpass" data-access="#forget">Click here</a></p>
+
+			</div>
+		</form>
+
+	</div>
+
+	<!-- Forget password form -->
+	<div id="forget" class="login-container hide">
+		<img src="{% static 'img/user.png' %}" class="legend">
+		<form action="{% url 'forgetpass' %}" method="post">
+			{% csrf_token %}
+			<h1 class="white">Forget Password</h1>
+			<div class="login-field">
+				<label class="alone">Username </label>
+				<input type="text" name="username" placeholder="Enter Username" class="login-input" required>
+				<div class="login-field">
+				<input type="submit" value="Reset" class="login-submit">
+			</div>
+			</div>
+		</form>
+	</div>
+{% endblock %}

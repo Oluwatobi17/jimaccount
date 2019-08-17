@@ -1,0 +1,1 @@
+web: gunicorn jimaccount.wsgi --log-file -

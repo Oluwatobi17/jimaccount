@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+	{% verbatim %}
+		<template id="newaccountTemplate">
+			<h5>{{description}} <span class="right">#{{amount}}</span></h5>
+			<span class="accDate">{{accType}}</span>
+		</template>
+	{% endverbatim %}
+	<div class="jump">
+		{% if user.role == 'write' %}
+			<a href="#" class="btnwhite hider">New Log</a>
+			<div class="hide newacc">
+				<span class="del hider">X</span>
+				<form id="newlogForm">
+					<p class="hide" id="newlogToken">{{csrf_token}}</p>
+					<input type="text" class="newlogtitle" placeholder="Enter account title">
+					<input type="submit" value="Add">
+				</form>
+			</div>
+			<br><br>
+
+			<div class="newcontent">
+				<form id="newaccountForm">
+					<input type="hidden" name="author" value="{{user.id}}">
+					<label class="black">Amount:</label>
+					<input type="number" name="amount" required>
+					<input type="radio" name="type" value="output"> <span>Output</span>
+					<input type="radio" name="type" value="input" checked> <span>Input</span>
+					<input type="text" name="description" placeholder="Description" required>
+
+					<input type="submit" value="Submit">
+				</form>
+			</div>
+		{% endif %}
+		<div class="account">
+			<h2 class="currentlog" id="{{lastlog.id}}">{{lastlog.title}}</h2>
+			<div class="spending">
+				<h5 class="total">Total Input: #<span id="totinput">{{totinput}}</span>; Total Output: #<span id="totoutput">{{totoutput}}</span></h5><br>
+				<div class="acc">
+					{% if lastlog.account_set.count %}
+						{% for acc in lastlog.account_set.all %}
+							<h5>{{acc.description}} <span class="right">#{{acc.amount}}</span> </h5>
+							<span class="accDate">{{acc.accType}}</span>
+						{% endfor %}
+					{% else %}
+						<h5 class="noacc">No account yet</h5>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="jump">
+		<h3>Recent accounts</h3>
+		<div class="recents"></div>
+		{% if logs.count > 1 %}
+			{% for log in logs %}
+				{% if not forloop.last %}
+					<a href="#" class="recentA" id="account{{log.id}}">{{log.title}}</a>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<h5 class="norecent">No recent log</h5>
+		{% endif %}
+	</div>
+
+	<script type="text/javascript" src="{% static 'mustache.js' %}"></script>
+{% endblock %}
