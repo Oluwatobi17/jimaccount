@@ -1,1 +1,1 @@
-web: gunicorn jimaccount.wsgi --log-file -
+web: gunicorn jimacc.wsgi --log-file -
